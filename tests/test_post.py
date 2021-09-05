@@ -3,14 +3,13 @@ from io import BytesIO
 import pytest
 from django import forms
 from django.contrib.auth import get_user_model
+from django.core.cache import cache
 from django.core.files.base import File
+from django.core.paginator import Page
 from django.db.models.query import QuerySet
 from PIL import Image
-from django.core.cache import cache
-
-from posts.models import Post
 from posts.forms import PostForm
-from django.core.paginator import Page
+from posts.models import Post
 
 from tests.utils import get_field_from_context
 
@@ -65,7 +64,6 @@ class TestPostView:
             'и при принудительной очистке кэша, удаленный в базе пост, '
             'пропадает из кэша'
         )
-
 
     @pytest.mark.django_db(transaction=True)
     def test_post_view_get(self, client, post_with_group):
